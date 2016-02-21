@@ -1,0 +1,15 @@
+# Laravel
+/vendor/
+.env
+/storage/framework/cache/
+
+# IntelliJ
+**/.idea/
+*.iml
+
+# OS X
+.DS_Store
+._*
+
+# Vagrant
+.vagrant
