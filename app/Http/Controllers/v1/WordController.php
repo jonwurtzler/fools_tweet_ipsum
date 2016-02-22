@@ -1,21 +1,11 @@
 <?php namespace app\Http\Controllers\v1;
 
 use App\Http\Controllers\ApiController;
-use App\Repositories\RandomizerRepository;
 use Illuminate\Http\JsonResponse;
 
 class WordController extends ApiController
 {
   const DEFAULT_MANY = 3;
-
-  /**
-   * @var RandomizerRepository
-   */
-  protected $randomizer;
-
-  public function __construct(RandomizerRepository $randomizer) {
-    $this->randomizer = $randomizer;
-  }
 
   /**
    * Get a single word from a random set.

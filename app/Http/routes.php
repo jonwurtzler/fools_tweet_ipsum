@@ -33,6 +33,10 @@
  * /paragraphs/{paragraphCount}/sentences/{sentenceCount}/feed/{feedName}
  */
 
+
+$app->get('/categories', 'ApiController@categories');
+$app->get('/feeds', 'ApiController@feeds');
+
 $app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\v1'], function() use ($app) {
   /**
    * Words
