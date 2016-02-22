@@ -1,9 +1,10 @@
 <?php namespace app\Http\Controllers\v1;
 
+use App\Http\Controllers\ApiController;
 use App\Repositories\RandomizerRepository;
-use Laravel\Lumen\Routing\Controller as BaseController;
+use Illuminate\Http\JsonResponse;
 
-class ParagraphController extends BaseController
+class ParagraphController extends ApiController
 {
   const DEFAULT_MANY = 3;
 
@@ -19,13 +20,13 @@ class ParagraphController extends BaseController
   /**
    * Get a single paragraph from a random set.
    *
-   * @return mixed
+   * @return JsonResponse
    */
   public function paragraph()
   {
     $paragraph = $this->randomizer->getParagraphs(1);
 
-    return $paragraph[0];
+    return $this->apiResponse($paragraph[0]);
   }
 
   /**
@@ -38,7 +39,10 @@ class ParagraphController extends BaseController
    */
   public function paragraphs($paragraphCount = self::DEFAULT_MANY, $sentenceCount = null)
   {
-    return $this->randomizer->getParagraphs($paragraphCount, $sentenceCount);
+    $data   = $this->randomizer->getParagraphs($paragraphCount, $sentenceCount);
+    $concat = implode("\n", $data);
+
+    return $this->apiResponse($data, $concat);
   }
 
   /**
@@ -52,7 +56,10 @@ class ParagraphController extends BaseController
    */
   public function categoryParagraphs($paragraphCount, $sentenceCount, $category)
   {
-    return $this->randomizer->getParagraphs($paragraphCount, $sentenceCount, $category);
+    $data   = $this->randomizer->getParagraphs($paragraphCount, $sentenceCount, $category);
+    $concat = implode("\n", $data);
+
+    return $this->apiResponse($data, $concat);
   }
 
   /**
@@ -66,7 +73,10 @@ class ParagraphController extends BaseController
    */
   public function feedParagraphs($paragraphCount, $sentenceCount, $feedName)
   {
-    return $this->randomizer->getParagraphs($paragraphCount, $sentenceCount, null, $feedName);
+    $data   = $this->randomizer->getParagraphs($paragraphCount, $sentenceCount, null, $feedName);
+    $concat = implode("\n", $data);
+
+    return $this->apiResponse($data, $concat);
   }
 
 }

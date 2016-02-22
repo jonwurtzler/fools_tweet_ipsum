@@ -1,9 +1,10 @@
 <?php namespace app\Http\Controllers\v1;
 
+use App\Http\Controllers\ApiController;
 use App\Repositories\RandomizerRepository;
-use Laravel\Lumen\Routing\Controller as BaseController;
+use Illuminate\Http\JsonResponse;
 
-class SentenceController extends BaseController
+class SentenceController extends ApiController
 {
   const DEFAULT_MANY = 3;
 
@@ -25,7 +26,7 @@ class SentenceController extends BaseController
   {
     $sentence = $this->randomizer->getSentences(1);
 
-    return $sentence[0];
+    return $this->apiResponse($sentence[0]);
   }
 
   /**
@@ -33,11 +34,14 @@ class SentenceController extends BaseController
    *
    * @param int $sentenceCount
    *
-   * @return string[]
+   * @return JsonResponse
    */
   public function sentences($sentenceCount = self::DEFAULT_MANY)
   {
-    return $this->randomizer->getSentences($sentenceCount);
+    $data   = $this->randomizer->getSentences($sentenceCount);
+    $concat = implode("\n", $data);
+
+    return $this->apiResponse($data, $concat);
   }
 
   /**
@@ -46,11 +50,14 @@ class SentenceController extends BaseController
    * @param int    $sentenceCount
    * @param string $category
    *
-   * @return string[]
+   * @return JsonResponse
    */
   public function categorySentences($sentenceCount, $category)
   {
-    return $this->randomizer->getSentences($sentenceCount, $category);
+    $data   = $this->randomizer->getSentences($sentenceCount, $category);
+    $concat = implode("\n", $data);
+
+    return $this->apiResponse($data, $concat);
   }
 
   /**
@@ -59,11 +66,14 @@ class SentenceController extends BaseController
    * @param int    $sentenceCount
    * @param string $feedName
    *
-   * @return string[]
+   * @return JsonResponse
    */
   public function feedSentences($sentenceCount, $feedName)
   {
-    return $this->randomizer->getSentences($sentenceCount, null, $feedName);
+    $data   = $this->randomizer->getSentences($sentenceCount, null, $feedName);
+    $concat = implode("\n", $data);
+
+    return $this->apiResponse($data, $concat);
   }
 
 }

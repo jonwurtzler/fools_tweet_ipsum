@@ -1,9 +1,10 @@
 <?php namespace app\Http\Controllers\v1;
 
+use App\Http\Controllers\ApiController;
 use App\Repositories\RandomizerRepository;
-use Laravel\Lumen\Routing\Controller as BaseController;
+use Illuminate\Http\JsonResponse;
 
-class WordController extends BaseController
+class WordController extends ApiController
 {
   const DEFAULT_MANY = 3;
 
@@ -19,13 +20,13 @@ class WordController extends BaseController
   /**
    * Get a single word from a random set.
    *
-   * @return mixed
+   * @return JsonResponse
    */
   public function word()
   {
     $word = $this->randomizer->getWords(1);
 
-    return $word[0];
+    return $this->apiResponse($word[0]);
   }
 
   /**
@@ -33,11 +34,14 @@ class WordController extends BaseController
    *
    * @param int $wordCount
    *
-   * @return string[]
+   * @return JsonResponse
    */
   public function words($wordCount = self::DEFAULT_MANY)
   {
-    return $this->randomizer->getWords($wordCount);
+    $data   = $this->randomizer->getWords($wordCount);
+    $concat = implode(" ", $data);
+
+    return $this->apiResponse($data, $concat);
   }
 
   /**
@@ -46,11 +50,14 @@ class WordController extends BaseController
    * @param int    $wordCount
    * @param string $category
    *
-   * @return string[]
+   * @return JsonResponse
    */
   public function categoryWords($wordCount, $category)
   {
-    return $this->randomizer->getWords($wordCount, $category);
+    $data   = $this->randomizer->getWords($wordCount, $category);
+    $concat = implode(" ", $data);
+
+    return $this->apiResponse($data, $concat);
   }
 
   /**
@@ -63,7 +70,10 @@ class WordController extends BaseController
    */
   public function feedWords($wordCount, $feedName)
   {
-    return $this->randomizer->getWords($wordCount, null, $feedName);
+    $data   = $this->randomizer->getWords($wordCount, null, $feedName);
+    $concat = implode(" ", $data);
+
+    return $this->apiResponse($data, $concat);
   }
 
 }
