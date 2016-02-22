@@ -8,7 +8,7 @@ class SourceRepository
 {
 
   protected $categories = [
-    'political' => ['sarahpalinusa', 'realdonaldtrump'],
+    'political' => ['sarahpalinusa', 'realdonaldtrump', 'senjohnmccain', 'rupertmurdoch'],
     'musicians' => ['says_drake', 'stuffdrakedoes', 'kanyewest', 'bobatl'],
     'actors'    => ['officialjaden', 'snookie']
   ];
@@ -24,7 +24,9 @@ class SourceRepository
     'officialjaden'   => "Jaden Smith",
     'snookie'         => "Nicole Polizzi",
     'thetweetofgod'   => "God",
-    'big_ben_clock'   => "Big Ben"
+    'big_ben_clock'   => "Big Ben",
+    'senjohnmccain'   => "John McCain",
+    'rupertmurdoch'   => "Rupert Murdoch"
   ];
 
   public function __construct(Repository $cache, TwitterContract $twitter) {
