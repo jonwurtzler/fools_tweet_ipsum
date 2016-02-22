@@ -145,7 +145,7 @@ class RandomizerRepository
     }
 
     $feedList   = $this->source->getFeedList();
-    $randomFeed = $this->faker->randomElement($feedList);
+    $randomFeed = $this->faker->randomElement(array_keys($feedList));
 
     return $this->source->getSingleFeed($randomFeed);
   }
