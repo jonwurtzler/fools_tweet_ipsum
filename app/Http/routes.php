@@ -10,16 +10,6 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-
-$app->get('/', function () use ($app) {
-    return $app->version();
-});
-$app->group(['prefix' => 'admin'], function () use ($app) {
-  $app->get('users', function ()    {
-    // Matches The "/admin/users" URL
-  });
-});
-
 /**
  * Needed routes
  * /
@@ -43,31 +33,34 @@ $app->group(['prefix' => 'admin'], function () use ($app) {
  * /paragraphs/{paragraphCount}/sentences/{sentenceCount}/feed/{feedName}
  */
 
-/**
- * Words
- */
-$app->get('/', 'WordController@word');
-$app->get('/word', 'WordController@word');
-$app->get('/words', 'WordController@words');
-$app->get('/words/{wordCount}', 'WordController@words');
-$app->get('/words/{wordCount}/category/{category}', 'WordController@categoryWords');
-$app->get('/words/{wordCount}/feed/{feedName}', 'WordController@feedWords');
+$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\v1'], function() use ($app) {
+  /**
+   * Words
+   */
+  $app->get('/', 'WordController@word');
+  $app->get('/word', 'WordController@word');
+  $app->get('/words', 'WordController@words');
+  $app->get('/words/{wordCount}', 'WordController@words');
+  $app->get('/words/{wordCount}/category/{category}', 'WordController@categoryWords');
+  $app->get('/words/{wordCount}/feed/{feedName}', 'WordController@feedWords');
 
-/**
- * Sentences
- */
-$app->get('/sentence', 'SentenceController@sentence');
-$app->get('/sentences', 'SentenceController@sentences');
-$app->get('/sentences/{sentenceCount}', 'SentenceController@sentences');
-$app->get('/sentences/{sentenceCount}/category/{category}', 'SentenceController@categorySentences');
-$app->get('/sentences/{sentenceCount}/feed/{feedName}', 'SentenceController@feedSentences');
+  /**
+   * Sentences
+   */
+  $app->get('/sentence', 'SentenceController@sentence');
+  $app->get('/sentences', 'SentenceController@sentences');
+  $app->get('/sentences/{sentenceCount}', 'SentenceController@sentences');
+  $app->get('/sentences/{sentenceCount}/category/{category}', 'SentenceController@categorySentences');
+  $app->get('/sentences/{sentenceCount}/feed/{feedName}', 'SentenceController@feedSentences');
 
-/**
- * Paragraphs
- */
-$app->get('/paragraph', 'ParagraphController@paragraph');
-$app->get('/paragraphs', 'ParagraphController@paragraphs');
-$app->get('/paragraphs/{paragraphCount}', 'ParagraphController@paragraphs');
-$app->get('/paragraphs/{paragraphCount}/sentences/{sentenceCount}', 'ParagraphController@paragraphs');
-$app->get('/paragraphs/{paragraphCount}/sentences/{sentenceCount}/category/{category}', 'ParagraphController@categoryParagraphs');
-$app->get('/paragraphs/{paragraphCount}/sentences/{sentenceCount}/feed/{feedName}', 'ParagraphController@feedParagraphs');
+  /**
+   * Paragraphs
+   */
+  $app->get('/paragraph', 'ParagraphController@paragraph');
+  $app->get('/paragraphs', 'ParagraphController@paragraphs');
+  $app->get('/paragraphs/{paragraphCount}', 'ParagraphController@paragraphs');
+  $app->get('/paragraphs/{paragraphCount}/sentences/{sentenceCount}', 'ParagraphController@paragraphs');
+  $app->get('/paragraphs/{paragraphCount}/sentences/{sentenceCount}/category/{category}', 'ParagraphController@categoryParagraphs');
+  $app->get('/paragraphs/{paragraphCount}/sentences/{sentenceCount}/feed/{feedName}', 'ParagraphController@feedParagraphs');
+
+});
