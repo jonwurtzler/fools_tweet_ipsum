@@ -27,7 +27,7 @@ class ParagraphController extends ApiController
    *
    * @return string[]
    */
-  public function paragraphs($paragraphCount = self::DEFAULT_MANY, $sentenceCount = null)
+  public function paragraphs($paragraphCount = self::DEFAULT_MANY, $sentenceCount = 3)
   {
     $data   = $this->randomizer->getParagraphs($paragraphCount, $sentenceCount);
     $concat = implode("\n", $data);
