@@ -11,8 +11,6 @@
 |
 */
 
-use App\Services\Contracts\TwitterContract;
-
 $app->get('/', function () use ($app) {
     return $app->version();
 });
@@ -22,21 +20,54 @@ $app->group(['prefix' => 'admin'], function () use ($app) {
   });
 });
 
-$app->group(['prefix' => 'word', 'namespace' => 'App\Http\Controllers'], function() use ($app) {
-  $app->get('/', 'Controller@word');
-  $app->get('category/{category}', 'Controller@word');
-  $app->get('feed/{feed}', 'Controller@word');
-});
+/**
+ * Needed routes
+ * /
+ * /word
+ * /words
+ * /words/{wordCount}
+ * /words/{wordCount}/category/{category}
+ * /words/{wordCount}/feed/{feedName}
+ *
+ * /sentence
+ * /sentences
+ * /sentences/{sentenceCount}
+ * /sentences/{sentenceCount}/category/{category}
+ * /sentences/{sentenceCount}/feed/{feedName}
+ *
+ * /paragraph
+ * /paragraphs
+ * /paragraphs/{paragraphCount}
+ * /paragraphs/{paragraphCount}/sentences/{sentenceCount}
+ * /paragraphs/{paragraphCount}/sentences/{sentenceCount}/category/{category}
+ * /paragraphs/{paragraphCount}/sentences/{sentenceCount}/feed/{feedName}
+ */
 
-$app->group(['prefix' => 'feed/{feed}', 'namespace' => 'App\Http\Controllers'], function() use ($app) {
-  $app->get('/word', 'Controller@word');
-  $app->get('/words', 'Controller@word');
-  $app->get('/words/{count}', 'Controller@word');
-  $app->get('/sentence', 'Controller@word');
-  $app->get('/sentences', 'Controller@word');
-  $app->get('/sentences{count}', 'Controller@word');
-  $app->get('/paragraph', 'Controller@word');
-  $app->get('/paragraphs', 'Controller@word');
-});
+/**
+ * Words
+ */
+$app->get('/', 'WordController@word');
+$app->get('/word', 'WordController@word');
+$app->get('/words', 'WordController@words');
+$app->get('/words/{wordCount}', 'WordController@words');
+$app->get('/words/{wordCount}/category/{category}', 'WordController@categoryWords');
+$app->get('/words/{wordCount}/feed/{feedName}', 'WordController@feedWords');
 
-$app->get('/testTwitter', 'Controller@testTwitter');
+/**
+ * Sentences
+ */
+$app->get('/sentence', 'SentenceController@sentence');
+$app->get('/sentences', 'SentenceController@sentences');
+$app->get('/sentences/{sentenceCount}', 'SentenceController@sentences');
+$app->get('/sentences/{sentenceCount}/category/{category}', 'SentenceController@categorySentences');
+$app->get('/sentences/{sentenceCount}/feed/{feedName}', 'SentenceController@feedSentences');
+
+/**
+ * Paragraphs
+ */
+$app->get('/paragraph', 'ParagraphController@paragraph');
+$app->get('/paragraphs', 'ParagraphController@paragraphs');
+$app->get('/paragraphs/{paragraphCount}', 'ParagraphController@paragraphs');
+$app->get('/paragraphs/{paragraphCount}/sentences/{sentenceCount}', 'ParagraphController@paragraphs');
+$app->get('/paragraphs/{paragraphCount}/sentences/{sentenceCount}/category/{category}', 'ParagraphController@categoryParagraphs');
+$app->get('/paragraphs/{paragraphCount}/sentences/{sentenceCount}/feed/{feedName}', 'ParagraphController@feedParagraphs');
